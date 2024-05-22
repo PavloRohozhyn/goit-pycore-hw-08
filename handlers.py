@@ -1,8 +1,10 @@
 from validation import input_error, validation_for_add_function, \
     validation_for_change_function, validation_for_show_function
-from utils import print_with_color 
+from utils import print_with_color
 from classes import AddressBook, Record
 from errors import error_name_doesnt_exists
+import pickle
+
 
 
 @input_error
@@ -89,6 +91,21 @@ def birthdays(book):
     pool_of_bday = book.get_upcoming_birthdays()
     if pool_of_bday:
         for item in pool_of_bday:
-            print(f"Name: {item.name}, Congradultion day: {item.birthday}")
+            print_with_color(f"Name: {item.name}, Congradultion day: {item.birthday}", 'yellow')
     else:
         return 'Unfortunately, there is no one to congratulate'
+
+
+def save_data(book, filename="addressbook.pkl"):
+    """ save data into file """
+    with open(filename, "wb") as f:
+        pickle.dump(book, f)
+
+
+def load_data(filename="addressbook.pkl"):
+    """ get data from file """
+    try:
+        with open(filename, "rb") as f:
+            return pickle.load(f)
+    except FileNotFoundError:
+        return AddressBook()

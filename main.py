@@ -1,14 +1,15 @@
 """ import modules """
 from utils import print_with_color, print_banner
 from handlers import parse_input, add_contact, change_contact, show_all, show_phone, \
-    add_birthday, show_birthday, birthdays
+    add_birthday, show_birthday, birthdays, save_data, load_data
 from classes import AddressBook, Record
 
 
 # Main
 def main():
     """ bot commands hendler """
-    book = AddressBook()
+    # get data from file 
+    book = load_data()
     while True:
 
         user_input = input("Enter a command: ")
@@ -54,6 +55,9 @@ def main():
         # something else
         else:
             print_with_color("Invalid command.", 'yellow')
+
+        # save data in to file
+        save_data(book)
 
 
 if __name__ == "__main__":
